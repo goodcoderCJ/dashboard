@@ -1,0 +1,25 @@
+.navigationBtn {
+  width: 80%;
+  max-width: 800px;
+  height: 40px;
+  list-style-type: none;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1em;
+  color: rgb(151, 147, 147);
+}
+.navigationBtn a {
+  padding: 0.5em;
+  border: 1px solid rgb(25, 25, 248);
+  cursor: pointer;
+  margin-left: 0.5em;
+  border-radius: 4px;
+}
+
+.prevBtn,
+.nextBtn {
+  background: rgb(25, 25, 248);
+}
+.navActive a {
+  background-color: blue;
+}
