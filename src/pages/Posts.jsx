@@ -47,7 +47,7 @@ const Posts = () => {
     });
   return (
     <div>
-      <h1 className="font-bold text-2xl">Get Data For All Posts</h1>
+      <h1 className="font-bold text-2xl mt-5">Get Data For All Posts</h1>
       {loading && <div>loading...</div>}
       <div className="albums-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 py-4 px-2 gap-4 my-4">
         {postsInfo}
