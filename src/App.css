@@ -1,3 +1,13 @@
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #202c37 !important;
+}
 .navigationBtn {
   width: 80%;
   max-width: 800px;
@@ -5,8 +15,8 @@
   list-style-type: none;
   display: flex;
   justify-content: flex-end;
-  margin-top: 1em;
   color: rgb(151, 147, 147);
+  margin: 1.2em;
 }
 .navigationBtn a {
   padding: 0.5em;
@@ -22,4 +32,12 @@
 }
 .navActive a {
   background-color: blue;
+}
+
+@media (max-width: 400px) {
+  .navigationBtn {
+    justify-content: center;
+    width: 100%;
+    max-width: 100%;
+  }
 }
