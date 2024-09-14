@@ -77,7 +77,7 @@ const Todos = () => {
       <div className="albums-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 py-4 px-2 gap-4 my-4">
         {todosInfo}
       </div>
-      <div className="album-paginate">
+      <div className="flex items-center todo-paginate w-[60%] md:w-[80%] mt-4">
         <ReactPaginate
           previousLabel={"previous"}
           nextLabel={"Next"}

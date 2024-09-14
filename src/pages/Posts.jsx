@@ -52,7 +52,7 @@ const Posts = () => {
       <div className="albums-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 py-4 px-2 gap-4 my-4">
         {postsInfo}
       </div>
-      <div className="album-paginate">
+      <div className="post-paginate flex items-center w-[60%] md:w-[80%] mt-4">
         <ReactPaginate
           previousLabel={"previous"}
           nextLabel={"Next"}
