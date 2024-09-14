@@ -37,7 +37,8 @@ body {
 @media (max-width: 400px) {
   .navigationBtn {
     justify-content: center;
-    width: 100%;
-    max-width: 100%;
+    align-items: center;
+    width: 60%;
+    max-width: 60%;
   }
 }
