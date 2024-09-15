@@ -25,7 +25,7 @@ const Albums = () => {
   }, []);
   //data from albums for pagination
   const [page, setPage] = useState(0);
-  const dataPerPage = 10;
+  const dataPerPage = 15;
   const noOfDataVisited = page * dataPerPage;
   const pageChange = ({ selected }) => {
     setPage(selected);
@@ -51,7 +51,7 @@ const Albums = () => {
       <div className="albums-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 py-4 px-2 gap-4 my-4">
         {albumInfo}
       </div>
-      <div className=" flex items-center album-paginate w-[60%] md:w-[80%] mt-4">
+      <div className=" flex items-center album-paginate w-[100%] md:w-[80%] my-4 p-4">
         <ReactPaginate
           previousLabel={"previous"}
           nextLabel={"Next"}

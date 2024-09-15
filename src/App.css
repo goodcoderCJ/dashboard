@@ -5,18 +5,19 @@
   margin: 0;
   box-sizing: border-box;
 }
-body {
-  background-color: #202c37 !important;
-}
+
 .navigationBtn {
   width: 100%;
-  max-width: 800px;
+  flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 40px;
   list-style-type: none;
-  display: flex;
-  justify-content: flex-end;
   color: rgb(151, 147, 147);
   margin: 1.2em;
+  gap: 2em 0em;
+  padding: 4em 1em;
 }
 .navigationBtn a {
   padding: 0.5em;
@@ -36,9 +37,6 @@ body {
 
 @media (max-width: 400px) {
   .navigationBtn {
-    justify-content: center;
-    align-items: center;
-    width: 60%;
-    max-width: 60%;
+    padding: 2em 1em 3em 1em;
   }
 }

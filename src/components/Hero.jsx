@@ -47,11 +47,11 @@ const Hero = () => {
           key={info.id}
           className="col-span-1 bg-white shadow-md p-3 rounded-[10px] flex gap-4 items-center"
         >
-          <div className="w-[40px] h-[40px] bg-slate-100 rounded-full flex justify-center items-center">
+          <div className="w-[40px] h-[40px] bg-slate-200 rounded-full flex justify-center items-center">
             {info.icon}
           </div>
           <div className="second-container flex flex-col gap-1">
-            <p className="text-xs text-slate-300">{info.details}</p>
+            <p className="text-xs text-slate-400">{info.details}</p>
             <p className="font-bold text-sm">{info.price}</p>
           </div>
         </div>

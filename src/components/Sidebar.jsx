@@ -66,7 +66,14 @@ const Sidebar = ({ isSidebarOpen }) => {
                   (!isActive ? "text-blue-800" : "text-slate-100")
                 }
               >
-                <span>{iconlink.icons}</span>
+                <span className="hover flex flex-col gap-1">
+                  {iconlink.icons}
+                  {isSidebarOpen && (
+                    <p className="text-slate-500 text-xs text-center">
+                      {iconlink.navName}
+                    </p>
+                  )}
+                </span>
                 <p
                   className={`text-[1.1rem] text-slate-500 ml-3 transition-all duration-300 ${
                     isSidebarOpen && "hidden"
