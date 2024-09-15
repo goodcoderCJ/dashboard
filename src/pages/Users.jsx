@@ -1,28 +1,55 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import ReactPaginate from "react-paginate";
 import { Link } from "react-router-dom";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchUsers, setSearchUsers] = useState("");
   const [sortBy, setSortBy] = useState(null);
-  //fetch users jsonplaceholder
-  const getAlbums = () => {
+
+  const handleUserSearch = (e) => {
+    e.preventDefault();
+    setSearchUsers(e.target.value);
+  };
+  const handleUserSort = (e) => {
+    e.preventDefault();
+    setSortBy(e.target.value);
+  };
+  //fetch users from jsonplaceholder
+  const getUsers = useCallback(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => {
         return response.json();
       })
       .then((data) => {
-        setUsers(data);
+        if (searchUsers.length > 3) {
+          setUsers((data) => {
+            data.filter((datium) => {
+              datium.name.toLowerCase().includes(searchUsers.toLowerCase());
+            });
+          });
+        } else if (sortBy === "name") {
+          setUsers((data) => {
+            data.sort(data.name);
+          });
+        } else if (sortBy === "email") {
+          setUsers((data) => {
+            data.sort(data.email);
+          });
+        } else {
+          setUsers(data);
+        }
+
         setLoading(false);
       })
       .catch((err) => {
         console.log(err);
       });
-  };
+  }, [searchUsers, sortBy]);
   useEffect(() => {
-    getAlbums();
-  }, []);
+    getUsers();
+  }, [users, getUsers]);
   //data from users for pagination
   const [page, setPage] = useState(0);
   const dataPerPage = 15;
@@ -55,18 +82,20 @@ const Users = () => {
     <div className="mt-[2rem]">
       <h1 className="font-bold text-2xl">Get Data For All Users</h1>
       {loading && <div>loading...</div>}
-      <div className="search-sort flex w-[70%] justify-between gap-7 mt-4 my-3">
+      <div className="search-sort flex w-[80%] md:w-[70%]justify-between gap-7 mt-4 my-3">
         <input
           type="todoSearch"
           name="todoSearch"
           id="todoSearch"
+          value={searchUsers}
+          onChange={handleUserSearch}
           placeholder="Search users by name"
-          className="bg-white rounded-[5px] outline-none border-0 py-1 pl-2 flex-1 text-sm text-slate-600"
+          className="bg-white rounded-[5px] outline-none border-[1px] border-slate-400 py-2 md:py-1 pl-2 flex-1 text-sm text-slate-600"
         />
         <select
           value={sortBy}
-          onChange={setSortBy}
-          className="bg-white rounded-[5px] flex-1 py-1 pl-2 outline-none border-1 border-slate-200 text-sm text-slate-500"
+          onChange={handleUserSort}
+          className="bg-white rounded-[5px] flex-1  outline-none border-[1px] border-slate-400 py-2 md:py-1 pl-2text-sm text-slate-500"
         >
           <option value="">SortBy</option>
           <option value="email">Email</option>

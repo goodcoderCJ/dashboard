@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import ReactPaginate from "react-paginate";
 
 const Todos = () => {
@@ -9,34 +9,35 @@ const Todos = () => {
     e.preveDefault();
     setTodoSelected(e.target.value);
   };
-  // const getFilteredTodos = () => {
-  //   if (todoSelected === null || todoSelected === "") {
-  //     return todos;
-  //   } else if (todoSelected === "completed") {
-  //     todos.filter((todo) => todo.status === todoSelected);
-  //   } else if (todoSelected === "uncompleted") {
-  //     todos.filter((todo) => todo.status === todoSelected);
-  //   } else {
-  //     return <>There Is No User Data</>;
-  //   }
-  // };
+
   //fetch todos jsonplaceholder
-  const getTodos = () => {
+  const getTodos = useCallback(() => {
     fetch("https://jsonplaceholder.typicode.com/posts")
       .then((response) => {
         return response.json();
       })
       .then((data) => {
-        setTodos(data);
+        if (todoSelected === "complete") {
+          setTodos((data) => {
+            data.filter((datium) => datium.complete === true);
+          });
+        } else if (todoSelected === "uncompleted") {
+          setTodos((data) => {
+            data.filter((datium) => datium.complete === false);
+          });
+        } else {
+          setTodos(data);
+        }
+
         setLoading(false);
       })
       .catch((err) => {
         console.log(err);
       });
-  };
+  }, [todoSelected]);
   useEffect(() => {
     getTodos();
-  }, []);
+  }, [todos, getTodos]);
 
   //data from todos for pagination
   const [page, setPage] = useState(0);
@@ -55,7 +56,11 @@ const Todos = () => {
           className="bg-white col-span-1 py-4 px-5 flex flex-col gap-2 rounded-[10px] shadow-md"
         >
           <p className="text-sm text-slate-700">{todo.title}</p>
-          <p className="text-xl font-semibold border-slate-600 border-1">
+          <p
+            className={`text-xl font-semibold border-slate-600 border-[1px] ${
+              todo.complete === true ? "text-blue-800" : "text-red-500"
+            }`}
+          >
             {todo.complete}
           </p>
         </div>
@@ -68,9 +73,9 @@ const Todos = () => {
       <select
         value={todoSelected}
         onChange={onTodoStatus}
-        className="bg-white rounded-[5px] my-4 w-[20%] outline-none border-0"
+        className="bg-white rounded-[5px] my-4 w-[80%] md:w-[40%] outline-none  border-[1px] border-slate-400 py-[0.4rem] md:py-1 pl-2"
       >
-        <option value=""></option>
+        <option value="">Select Category</option>
         <option value="completed">Completed</option>
         <option value="uncompleted">Uncompleted</option>
       </select>
