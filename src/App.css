@@ -37,6 +37,7 @@
 
 @media (max-width: 400px) {
   .navigationBtn {
-    padding: 2em 1em 3em 1em;
+    padding: 2em 1em 5em 1em;
+    margin-bottom: 10em;
   }
 }
