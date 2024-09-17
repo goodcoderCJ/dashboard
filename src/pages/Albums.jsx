@@ -37,17 +37,23 @@ const Albums = () => {
       return (
         <div
           key={album.id}
-          className="bg-white rounded-[10px]  py-6 px-4 col-span-1 shadow-md flex flex-col gap-2"
+          className="bg-white dark:bg-[#304355] rounded-[10px]  py-6 px-4 col-span-1 shadow-md flex flex-col gap-2"
         >
-          <p className="text-sm text-black-300 ">{album.title}</p>
-          <p className="text-sm text-slate-400">{album.userid}</p>
+          <p className="text-sm text-black-300  dark:text-[white]">
+            {album.title}
+          </p>
+          <p className="text-sm text-slate-400 dark:text-[white]">
+            {album.userid}
+          </p>
         </div>
       );
     });
   return (
     <div>
-      <h1 className="font-bold text-2xl mt-5">Get Data For All Albums</h1>
-      {loading && <div>loading...</div>}
+      <h1 className="font-bold text-2xl mt-5 dark:text-[white]">
+        Get Data For All Albums
+      </h1>
+      {loading && <div className="dark:text-[white]">loading...</div>}
       <div className="albums-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 py-4 px-2 gap-4 my-4">
         {albumInfo}
       </div>

@@ -6,10 +6,28 @@ const Todos = () => {
   const [loading, setLoading] = useState(true);
   const [todoSelected, setTodoSelected] = useState(null);
   const onTodoStatus = (e) => {
-    e.preveDefault();
+    e.preventDefault();
     setTodoSelected(e.target.value);
   };
-
+  //filter based on selection
+  const returnedTodos = useCallback(
+    (data) => {
+      let result = data;
+      if (todoSelected === "complete") {
+        result = [...data].filter((datium) => {
+          return datium.complete === true;
+        });
+      } else if (todoSelected === "uncompleted") {
+        result = [...data].filter((datium) => {
+          return datium.complete === false;
+        });
+      } else {
+        return result;
+      }
+      return result;
+    },
+    [todoSelected]
+  );
   //fetch todos jsonplaceholder
   const getTodos = useCallback(() => {
     fetch("https://jsonplaceholder.typicode.com/posts")
@@ -17,27 +35,18 @@ const Todos = () => {
         return response.json();
       })
       .then((data) => {
-        if (todoSelected === "complete") {
-          setTodos((data) => {
-            data.filter((datium) => datium.complete === true);
-          });
-        } else if (todoSelected === "uncompleted") {
-          setTodos((data) => {
-            data.filter((datium) => datium.complete === false);
-          });
-        } else {
-          setTodos(data);
-        }
+        setTodos(returnedTodos(data));
 
         setLoading(false);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [todoSelected]);
+  }, [returnedTodos]);
+
   useEffect(() => {
     getTodos();
-  }, [todos, getTodos]);
+  }, [getTodos]);
 
   //data from todos for pagination
   const [page, setPage] = useState(0);
@@ -53,11 +62,13 @@ const Todos = () => {
       return (
         <div
           key={todo.id}
-          className="bg-white col-span-1 py-4 px-5 flex flex-col gap-2 rounded-[10px] shadow-md"
+          className="bg-white dark:bg-[#304355] col-span-1 py-4 px-5 flex flex-col gap-2 rounded-[10px] shadow-md"
         >
-          <p className="text-sm text-slate-700">{todo.title}</p>
+          <p className="text-sm text-slate-700 dark:text-[white]">
+            {todo.title}
+          </p>
           <p
-            className={`text-xl font-semibold border-slate-600 border-[1px] ${
+            className={`text-xl font-semibold  dark:text-[white] ${
               todo.complete === true ? "text-blue-800" : "text-red-500"
             }`}
           >
@@ -68,12 +79,14 @@ const Todos = () => {
     });
   return (
     <div className="py-4">
-      <h1 className="font-bold text-2xl">Get Data For All Todos</h1>
-      {loading && <div>loading...</div>}
+      <h1 className="font-bold text-2xl dark:text-[white]">
+        Get Data For All Todos
+      </h1>
+      {loading && <div className="dark:text-[white]">loading...</div>}
       <select
         value={todoSelected}
         onChange={onTodoStatus}
-        className="bg-white rounded-[5px] my-4 w-[80%] md:w-[40%] outline-none  border-[1px] border-slate-400 py-[0.4rem] md:py-1 pl-2"
+        className="bg-white dark:bg-[#304355] rounded-[5px] dark:text-[white] my-4 w-[80%] md:w-[40%] outline-none  border-[1px] border-slate-400 py-[0.4rem] md:py-1 pl-2"
       >
         <option value="">Select Category</option>
         <option value="completed">Completed</option>

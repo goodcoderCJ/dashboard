@@ -36,19 +36,29 @@ const Posts = () => {
       return (
         <div
           key={post.id}
-          className="bg-white col-span-1 flex flex-col gap-2 py-4 px-5 rounded-[10px] showdow-md"
+          className="bg-white dark:bg-[#304355] col-span-1 flex flex-col gap-2 py-4 px-5 rounded-[10px] showdow-md"
         >
-          <p className="text-sm text-slate-500">{post.title}</p>
-          <p className="text-sm text-slate-700">{post.post}</p>
-          <p className="text-sm text-slate-700">{post.body}</p>
-          <p className="text-sm text-slate-700">{post.user}</p>
+          <p className="text-sm text-slate-500 dark:text-[white]">
+            {post.title}
+          </p>
+          <p className="text-sm text-slate-700 dark:text-[white]">
+            {post.post}
+          </p>
+          <p className="text-sm text-slate-700 dark:text-[#fffffd]">
+            {post.body}
+          </p>
+          <p className="text-sm text-slate-700 dark:text-[#fffffd]">
+            {post.user}
+          </p>
         </div>
       );
     });
   return (
     <div>
-      <h1 className="font-bold text-2xl mt-5">Get Data For All Posts</h1>
-      {loading && <div>loading...</div>}
+      <h1 className="font-bold text-2xl dark:text-[white] mt-5">
+        Get Data For All Posts
+      </h1>
+      {loading && <div className="dark:text-[white]">loading...</div>}
       <div className="albums-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 py-4 px-2 gap-4 my-4">
         {postsInfo}
       </div>

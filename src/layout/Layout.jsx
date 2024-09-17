@@ -24,13 +24,13 @@ const Layout = () => {
         <Header setIsSidebarOpen={toggleSidebar} />
         <Hero />
         <div className=" my-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 px-6">
-          <div className="col-span-1 bg-white py-6 px-6 text-sm text-blue-600 text-bold shadow-md">
+          <div className="col-span-1 bg-white dark:bg-[#304355] py-6 px-6 text-sm text-blue-600 dark:text-[white] text-bold shadow-md">
             ETHNOS CYBER LTD.
           </div>
-          <div className="col-span-1 bg-white py-6 px-6 text-sm text-blue-600 text-bold shadow-md">
+          <div className="col-span-1 bg-white dark:bg-[#304355] py-6 px-6 text-sm text-blue-600 dark:text-[white] text-bold shadow-md">
             YOUR GO TO FOR SECURED SERVICE
           </div>
-          <div className="col-span-1 bg-white py-6 px-6 text-sm text-blue-600 text-bold shadow-md">
+          <div className="col-span-1 bg-white dark:bg-[#304355] py-6 px-6 text-sm text-blue-600 dark:text-[white] text-bold shadow-md">
             WE HOLD YOU ALL THE WAY
           </div>
         </div>

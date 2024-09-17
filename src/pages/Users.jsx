@@ -1,12 +1,13 @@
 import { useEffect, useState, useCallback } from "react";
 import ReactPaginate from "react-paginate";
 import { Link } from "react-router-dom";
+import picture from "../assets/unsplash_DrVJk1EaPSc.png";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchUsers, setSearchUsers] = useState("");
-  const [sortBy, setSortBy] = useState(null);
+  const [sortBy, setSortBy] = useState("");
 
   const handleUserSearch = (e) => {
     e.preventDefault();
@@ -16,6 +17,26 @@ const Users = () => {
     e.preventDefault();
     setSortBy(e.target.value);
   };
+  const filteredUsers = useCallback(
+    (data) => {
+      let usersData = data;
+      if (searchUsers.length > 3 && sortBy === "") {
+        usersData = [...data].filter((datium) => {
+          return datium.name.toLowerCase().includes(searchUsers.toLowerCase());
+        });
+      } else if (searchUsers.length === 0 && sortBy === "email") {
+        usersData = [...data].sort((a, b) => {
+          return a.email.localeCompare(b.email);
+        });
+      } else if (searchUsers.length === 0 && sortBy === "name") {
+        usersData = [...data].sort((a, b) => {
+          return a.name.localeCompare(b.name);
+        });
+      }
+      return usersData;
+    },
+    [searchUsers, sortBy]
+  );
   //fetch users from jsonplaceholder
   const getUsers = useCallback(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
@@ -23,33 +44,18 @@ const Users = () => {
         return response.json();
       })
       .then((data) => {
-        if (searchUsers.length > 3) {
-          setUsers((data) => {
-            data.filter((datium) => {
-              datium.name.toLowerCase().includes(searchUsers.toLowerCase());
-            });
-          });
-        } else if (sortBy === "name") {
-          setUsers((data) => {
-            data.sort(data.name);
-          });
-        } else if (sortBy === "email") {
-          setUsers((data) => {
-            data.sort(data.email);
-          });
-        } else {
-          setUsers(data);
-        }
+        setUsers(filteredUsers(data));
 
         setLoading(false);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [searchUsers, sortBy]);
+  }, [filteredUsers]);
+
   useEffect(() => {
     getUsers();
-  }, [users, getUsers]);
+  }, [getUsers]);
   //data from users for pagination
   const [page, setPage] = useState(0);
   const dataPerPage = 15;
@@ -62,27 +68,31 @@ const Users = () => {
     .slice(noOfDataVisited, noOfDataVisited + dataPerPage)
     .map((user) => {
       return (
-        <Link to={`${user.id}`} key={user.id}>
-          <div
-            key={user.id}
-            className="bg-white shadow-md rounded-[10px] col-span-1 flex flex-col gap-2 py-4 px-6"
-          >
-            <p className="font-bold text-sm">Cybersecurity Enabled Users</p>
-            <div className="each-user flex flex-col gap-2 md:gap-3">
-              <p className="text-sm">{user.name}</p>
-              <p className="text-sm text-slate-300">{user.email}</p>
-              <p className="text-sm">{user.address.city}</p>
-              <p>{user.address.suite}</p>
-            </div>
-          </div>
+        <Link to={`${user.id}`} key={user.id} className="p-1">
+          <tr className="grid grid-cols-[20%_20%_36%_12%_12%] gap-12 text-xs md:text-sm py-1">
+            <td className="w-[20%] col-span-1 mr-4">
+              <img
+                src={picture}
+                className="w-7 md:w-8 h-7 md:h-8 rounded-full aspect-[1/1]"
+              />
+            </td>
+            <td className="w-[20%]  col-span-1 mr-4">{user.name}</td>
+            <td className="w-[36%]  col-span-1 mr-4">{user.email}</td>
+            <td className="w-[12%]  col-span-1 mr-4">{user.address.city}</td>
+            <td className="text-slate-400 w-[12%]  col-span-1 mr-4">
+              {user.address.suite}
+            </td>
+          </tr>
         </Link>
       );
     });
   return (
     <div className="mt-[2rem]">
-      <h1 className="font-bold text-2xl">Get Data For All Users</h1>
-      {loading && <div>loading...</div>}
-      <div className="search-sort flex w-[80%] md:w-[70%]justify-between gap-7 mt-4 my-3">
+      <h1 className="font-bold text-2xl dark:text-[white]">
+        Get Data For All Users
+      </h1>
+      {loading && <div className="dark:text-[white]">loading...</div>}
+      <div className="search-sort flex w-[80%] md:w-[70%] justify-between gap-7  my-10">
         <input
           type="todoSearch"
           name="todoSearch"
@@ -90,21 +100,34 @@ const Users = () => {
           value={searchUsers}
           onChange={handleUserSearch}
           placeholder="Search users by name"
-          className="bg-white rounded-[5px] outline-none border-[1px] border-slate-400 py-2 md:py-1 pl-2 flex-1 text-sm text-slate-600"
+          className="bg-white dark:bg-[#304355] first-letter:rounded-[5px] outline-none border-[1px] border-slate-400 py-2 md:py-1 pl-2 flex-1 text-sm text-slate-600 dark:text-[white]"
         />
         <select
           value={sortBy}
           onChange={handleUserSort}
-          className="bg-white rounded-[5px] flex-1  outline-none border-[1px] border-slate-400 py-2 md:py-1 pl-2text-sm text-slate-500"
+          className="bg-white dark:bg-[#304355] rounded-[5px] flex-1  outline-none border-[1px] border-slate-400 py-2 md:py-1 pl-2 text-sm text-slate-500 dark:text-[white]"
         >
           <option value="">SortBy</option>
           <option value="email">Email</option>
           <option value="name">Name</option>
         </select>
       </div>
-      <div className="albums-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 py-4 px-2 gap-4 my-4">
-        {postsInfo}
-      </div>
+
+      <table className="bg-white dark:bg-[#304355] shadow-md rounded-[10px] my-12 border-[1px] border-slate-300 w-[100%] flex  dark:text-[white] table-auto">
+        <div className="table-data-wrapper w-full overflow-auto p-6  flex-1">
+          <thead className="w-full flex-1">
+            <tr className="text-xs md:text-sm font-bold grid grid-cols-[20%_20%_36%_12%_12%] gap-12 py-1">
+              <th className="w-[20%] text-left col-span-1 mr-4">Picture</th>
+              <th className="w-[20%] text-left col-span-1 mr-4">Name</th>
+              <th className="w-[36%] text-left col-span-1 mr-4">Email</th>
+              <th className="w-[12%] text-left col-span-1 mr-4">City</th>
+              <th className="w-[12%] text-left col-span-1 mr-4">Suite</th>
+            </tr>
+          </thead>
+          <tbody className="w-full flex-1"> {postsInfo}</tbody>
+        </div>
+      </table>
+
       <div className="flex items-center user-paginate w-[100%] md:w-[80%] my-4 p-4">
         <ReactPaginate
           previousLabel={"previous"}

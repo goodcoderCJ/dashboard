@@ -8,8 +8,8 @@
 
 .navigationBtn {
   width: 100%;
-  flex-wrap: wrap;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   height: 40px;

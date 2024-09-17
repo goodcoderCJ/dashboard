@@ -27,22 +27,22 @@ const Header = ({ setIsSidebarOpen }) => {
             <FaBars className="text-white flex" onClick={setIsSidebarOpen} />
           </div>
           <div className="">
-            <span className="text-[0.7rem] text-slate-400">
+            <span className="text-[0.7rem] text-slate-400 dark:text-[white]">
               Pages {location.pathname}
             </span>
-            <p className="font-bold text-blue-800">
+            <p className="font-bold text-blue-800 dark:text-[white]">
               {location.pathname.toUpperCase()}
             </p>
           </div>
         </div>
-        <div className="second-layout bg-white dark:bg-[#202c37] shadow-md rounded-[70px] p-2 ">
+        <div className="second-layout bg-white dark:bg-[#304355] shadow-md rounded-[70px] p-2 ">
           <div className="layout-content flex gap-3 items-center justify-between">
             <input
               type="search"
               name="search"
               id="search"
               placeholder="Search items..."
-              className="rounded-[30px] bg-slate-100 pl-2 text-[0.8rem] py-2 border-0 outline-none hidden sm:block md:block lg:block"
+              className="rounded-[30px] bg-slate-100 dark:bg-[#293947] pl-2 text-[0.8rem] py-2 border-0 outline-none hidden sm:block md:block lg:block"
             />
             <div className="icons-profile flex gap-1 items-center">
               <FaRegBell className="text-slate-400" />

@@ -1,6 +1,6 @@
 const Cards = (details, price, icon, name) => {
   return (
-    <div className="col-span-1 bg-white shadow-md p-3 rounded-[10px] flex gap-4 items-center">
+    <div className="col-span-1 bg-white dark:bg-[#293947] shadow-md p-3 rounded-[10px] flex gap-4 items-center">
       <div className="w-[40px] h-[40px] bg-slate-100 rounded-full flex justify-center items-center">
         {icon}
       </div>
